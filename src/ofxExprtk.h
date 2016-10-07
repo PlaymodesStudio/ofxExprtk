@@ -11,26 +11,43 @@
 #include "ofMain.h"
 #include "exprtk.hpp"
 
+template<typename T>
 class ofxExprtk{
 public:
     ofxExprtk(){};
     ~ofxExprtk(){};
     
-    void addSymbol(string sym, float &variable);
+    void addSymbol(string sym, T &variable);
     void registerSymbols();
     
     void compileExpression(string expression);
     
-    float evaluateExpression(){return expression.value();};
+    T evaluateExpression(){return expression.value();};
     
 private:
-    typedef exprtk::symbol_table<float> symbol_table_t;
-    typedef exprtk::expression<float>     expression_t;
-    typedef exprtk::parser<float>             parser_t;
+    typedef exprtk::symbol_table<T> symbol_table_t;
+    typedef exprtk::expression<T>     expression_t;
+    typedef exprtk::parser<T>             parser_t;
     
     symbol_table_t symbol_table;
     expression_t expression;
     parser_t parser;
 };
+
+
+template<typename T>
+void ofxExprtk<T>::addSymbol(string sym, T &variable){
+    symbol_table.add_variable(sym, variable);
+}
+
+template<typename T>
+void ofxExprtk<T>::registerSymbols(){
+    expression.register_symbol_table(symbol_table);
+}
+
+template<typename T>
+void ofxExprtk<T>::compileExpression(string expression_str){
+    parser.compile(expression_str, expression);
+}
 
 #endif /* ofxExprtk_h */
