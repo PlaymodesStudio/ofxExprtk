@@ -47,17 +47,7 @@ void ofxExprtk<T>::registerSymbols(){
 
 template<typename T>
 bool ofxExprtk<T>::compileExpression(string expression_str){
-    
-    if(parser.compile(expression_str, expression))
-    {
-        cout << "Exprtk : Parser compiled expression ! " << endl;
-        return true;
-    }
-    else
-    {
-        cout << "Exprtk : Parser FAILED to compile expression ! " << endl;
-        return false;
-    }
+    return (parser.compile(expression_str, expression));
 }
 
 #endif /* ofxExprtk_h */
