@@ -20,7 +20,7 @@ public:
     void addSymbol(string sym, T &variable);
     void registerSymbols();
     
-    void compileExpression(string expression);
+    bool compileExpression(string expression);
     
     T evaluateExpression(){return expression.value();};
     
@@ -46,8 +46,18 @@ void ofxExprtk<T>::registerSymbols(){
 }
 
 template<typename T>
-void ofxExprtk<T>::compileExpression(string expression_str){
-    parser.compile(expression_str, expression);
+bool ofxExprtk<T>::compileExpression(string expression_str){
+    
+    if(parser.compile(expression_str, expression))
+    {
+        cout << "Exprtk : Parser compiled expression ! " << endl;
+        return true;
+    }
+    else
+    {
+        cout << "Exprtk : Parser FAILED to compile expression ! " << endl;
+        return false;
+    }
 }
 
 #endif /* ofxExprtk_h */
